@@ -5,7 +5,7 @@ go 1.27
 require (
 	fyne.io/fyne/v2 v2.8.2
 	gioui.org v0.10.3
-	golang.org/x/image v0.26.0
+	golang.org/x/image v0.47.0
 )
 
 require (
@@ -40,8 +40,8 @@ require (
 	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/yuin/goldmark v1.8.2 // indirect
 	golang.org/x/exp/shiny v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
-	golang.org/x/net v0.48.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/net v0.62.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
