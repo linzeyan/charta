@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# A newer push to a pull request makes the older run's result irrelevant.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+
+# The three jobs together are `make check`. The native backends' tests run
+# here too, not skipped: the runners have no GPU, so scripts/linux-deps.sh
+# installs Mesa's software drivers for them to render on.
+jobs:
+  lint:
+    name: rustfmt, clippy, gofmt and go vet
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      # Pinned: every Rust release brings new lints, which -D warnings turns into failures
+      # unrelated to the change under review. Bump it on purpose, together with the fixes the
+      # newer clippy asks for.
+      - uses: dtolnay/rust-toolchain@1.97
+        with:
+          components: rustfmt, clippy
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      # go vet type-checks Gio and Fyne, which need their C headers.
+      - run: sudo scripts/linux-deps.sh
+      - run: make lint
+
+  test:
+    name: tests and Rust/Go conformance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - run: sudo scripts/linux-deps.sh
+      - run: make test test-conformance
+      # Snapshots the UI tests painted, and the conformance diffs.
+      - name: Upload test output
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-output
+          path: build/
+          if-no-files-found: ignore
+
+  web:
+    name: zoom in headless Chrome, and the Pages gallery
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      # The fixtures are rendered by the Go port.
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      # wasm-bindgen (pinned in mise.toml to the crate's version) and wasm-opt. Chrome and
+      # python3 come with the runner image.
+      - uses: jdx/mise-action@v5
+      # site checks the Pages gallery's zoom specs against the wasm build.
+      - run: make test-web site
+      - name: Upload the page and Chrome's log
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: web-zoom
+          path: build/web-zoom/
+          if-no-files-found: ignore

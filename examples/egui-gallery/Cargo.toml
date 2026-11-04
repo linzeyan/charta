@@ -1,0 +1,13 @@
+[package]
+name = "charta-egui-gallery"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+charta = { path = "../..", features = ["egui"] }
+charta-demos = { path = "../demos" }
+eframe = "0.37.0"
+
+[dev-dependencies]
+egui_kittest = { version = "0.37.0", features = ["wgpu", "snapshot"] }

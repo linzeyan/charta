@@ -1,0 +1,22 @@
+.charta{position:relative;display:inline-block;max-width:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.charta svg{display:block;max-width:100%;height:auto;background:var(--ch-surface)}
+.charta text{pointer-events:none}
+.ch-hit{fill:transparent}
+.ch-m{outline:none}
+.ch-m .ch-s,[data-series]{transition:opacity .12s,filter .12s}
+.ch-m.ch-on .ch-s{filter:brightness(1.12)}
+.ch-dim{opacity:.35}
+.ch-hide{display:none}
+.ch-x .ch-s{opacity:0}
+.ch-x.ch-on .ch-s{opacity:1}
+.ch-leg{cursor:pointer}
+.ch-leg.ch-off{opacity:.35}
+.ch-m:focus-visible .ch-s{stroke:var(--ch-text-primary);stroke-width:2}
+.ch-x:focus-visible .ch-s{stroke-width:1}
+.ch-tip{position:absolute;left:0;top:0;pointer-events:none;background:var(--ch-surface);border:1px solid var(--ch-border);border-radius:6px;padding:6px 8px;box-shadow:0 2px 8px rgba(0,0,0,.12);font-size:12px;line-height:1.35;white-space:nowrap;z-index:1}
+.ch-tip strong{display:block;font-weight:600;color:var(--ch-text-primary);font-variant-numeric:tabular-nums}
+.ch-tip span{display:block;color:var(--ch-text-secondary)}
+.ch-rows div{display:flex;align-items:center;gap:6px}
+.ch-rows i{width:12px;height:2px;border-radius:1px}
+.ch-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.ch-m .ch-s,[data-series]{transition:none}}

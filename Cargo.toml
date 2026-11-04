@@ -1,0 +1,46 @@
+[package]
+name = "charta"
+version = "0.0.0"
+edition = "2024"
+description = "Interactive charts for the full Data Viz Catalogue, rendered to SVG/HTML or native GUIs"
+repository = "https://github.com/linzeyan/charta"
+license = "Apache-2.0"
+publish = false
+# The Go module shares this repo root; keep its files out of the crate.
+include = ["src/**", "assets/**", "geo/world/*.txt", "LICENSE", "README.md"]
+
+[dependencies]
+egui = { version = "0.37.0", default-features = false, optional = true }
+fontdb = { version = "0.24.0", optional = true }
+lyon_tessellation = { version = "1.0.23", optional = true }
+serde = { version = "1.0.229", features = ["derive"], optional = true }
+slint = { version = "1.18.1", default-features = false, features = ["std", "compat-1-2"], optional = true }
+tiny-skia = { version = "0.12.0", default-features = false, features = ["std", "simd", "png-format"], optional = true }
+ttf-parser = { version = "0.25.1", optional = true }
+
+[features]
+serde = ["dep:serde"]
+# Natural Earth 1:110m countries for the map charts (~130 KB).
+geo-world = []
+# egui fills only convex polygons; lyon tessellates the concave outlines
+# (violins, ribbons, map regions) into a mesh. egui bundles no semibold, so
+# chart text uses the system fonts, found with fontdb as for PNG.
+egui = ["dep:egui", "dep:lyon_tessellation", "dep:fontdb", "dep:ttf-parser"]
+# Slint is GPL-3.0-only / royalty-free / commercial: an app that enables this
+# feature is bound by one of those licenses (see README).
+slint = ["dep:slint", "png"]
+# PNG output, drawn with tiny-skia and the system fonts.
+png = ["dep:tiny-skia", "dep:fontdb", "dep:ttf-parser"]
+
+[dev-dependencies]
+serde_json = "1.0.154"
+
+# The galleries are their own packages so the library's tests never compile
+# eframe or a Slint renderer.
+[workspace]
+members = [".", "examples/demos", "examples/egui-gallery", "examples/slint-gallery", "wasm"]
+default-members = ["."]
+
+[[example]]
+name = "fixtures"
+required-features = ["serde", "geo-world"]

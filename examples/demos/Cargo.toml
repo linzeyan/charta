@@ -1,0 +1,8 @@
+[package]
+name = "charta-demos"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+charta = { path = "../..", features = ["geo-world"] }

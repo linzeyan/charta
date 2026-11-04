@@ -1,0 +1,50 @@
+# Chart palette: token light dark (hex, optional alpha byte).
+# Values are the dataviz skill's validated reference palette; series order is
+# the CVD-safety mechanism, so never reorder or cycle it.
+surface fcfcfb 1a1a19
+text-primary 0b0b0b f0efec
+text-secondary 52514e c3c2b7
+text-muted 898781 898781
+grid e1e0d9 2c2c2a
+axis c3c2b7 383835
+border 0b0b0b1a ffffff1a
+series-1 2a78d6 3987e5
+series-2 eb6834 d95926
+series-3 1baf7a 199e70
+series-4 eda100 c98500
+series-5 e87ba4 d55181
+series-6 008300 008300
+series-7 6250d6 9085e9
+series-8 e34948 e66767
+# Area fills: the series hue as a ~10% wash (alpha 1a), never a saturated block.
+series-1-wash 2a78d61a 3987e51a
+series-2-wash eb68341a d959261a
+series-3-wash 1baf7a1a 199e701a
+series-4-wash eda1001a c985001a
+series-5-wash e87ba41a d551811a
+series-6-wash 0083001a 0083001a
+series-7-wash 6250d61a 9085e91a
+series-8-wash e349481a e667671a
+# Flows that overlap (ribbons, Sankey links): the series hue at ~35% (40% on
+# dark, where the same alpha reads weaker), so crossings stay visible.
+series-1-link 2a78d659 3987e566
+series-2-link eb683459 d9592666
+series-3-link 1baf7a59 199e7066
+series-4-link eda10059 c9850066
+series-5-link e87ba459 d5518166
+series-6-link 00830059 00830066
+series-7-link 6250d659 9085e966
+series-8-link e3494859 e6676766
+# Sequential ramp: one hue (blue), 7 classes, low to high. Dark mode runs the
+# same steps reversed so "near zero" recedes into the dark surface.
+seq-1 cde2fb 0d366b
+seq-2 9ec5f4 184f95
+seq-3 6da7ec 256abf
+seq-4 3987e5 3987e5
+seq-5 256abf 6da7ec
+seq-6 184f95 9ec5f4
+seq-7 0d366b cde2fb
+# Bullet-graph qualitative ranges, most contrast with the surface first.
+band-1 c3c2b7 4a4a46
+band-2 e1e0d9 383835
+band-3 f0efec 2c2c2a
