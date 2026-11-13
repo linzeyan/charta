@@ -1,6 +1,6 @@
 [package]
 name = "charta"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2024"
 description = "Interactive charts for the full Data Viz Catalogue, rendered to SVG/HTML or native GUIs"
 repository = "https://github.com/linzeyan/charta"

@@ -1,0 +1,68 @@
+name: Release
+
+# Push a tag that matches Cargo.toml's version, one tag per push: GitHub sends no tag
+# events when more than three tags arrive in one push.
+#   git tag v0.1.0 && git push origin refs/tags/v0.1.0
+# The tag is the release for both languages: Go resolves the module by it, and the
+# crate is not on crates.io, so Rust depends on it by git tag.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    name: tag matches Cargo.toml
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - run: |
+          version=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "charta") | .version')
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match Cargo.toml version $version"
+            exit 1
+          fi
+
+  # Everything CI gates main on, run against the tagged commit.
+  check:
+    needs: version
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$GITHUB_REF_NAME
+          gh release create "$tag" \
+            --repo "$GITHUB_REPOSITORY" \
+            --verify-tag \
+            --title "$tag" \
+            --generate-notes \
+            --notes "$(cat <<EOF
+          ## Install
+
+          **Go** (1.27.3 or newer):
+
+          \`\`\`sh
+          go get github.com/linzeyan/charta@$tag
+          \`\`\`
+
+          **Rust**: the crate is not on crates.io; depend on the tag, adding the features you need (\`egui\`, \`slint\`, \`png\`, \`serde\`, \`geo-world\`):
+
+          \`\`\`toml
+          charta = { git = "https://github.com/linzeyan/charta", tag = "$tag" }
+          \`\`\`
+
+          See the README for the backends and their system requirements.
+          EOF
+          )"

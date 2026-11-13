@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # release.yml gates a tag on these same jobs instead of keeping a copy.
+  workflow_call:
 
 permissions:
   contents: read
