@@ -12,7 +12,7 @@ toggles and zoom work on the page.
 - **Web and native GUI.** Charts render to HTML or SVG with a small embedded
   runtime for tooltips, hover highlight and legend toggles — usable in
   browsers, Tauri and Wails. Native backends draw into egui and Slint (Rust)
-  or Gio and Fyne (Go), with the same interactions.
+  or Gio, Fyne and MyGo (Go), with the same interactions.
 - **Zoom.** Category, time and numeric axes zoom by wheel, drag, shift-drag
   brush and double click, in every native backend and — through a small
   WebAssembly module — in the browser.
@@ -68,11 +68,12 @@ conformance tests feed them.
 | Slint | feature `slint` (see License) | |
 | Gio | | package `gio` |
 | Fyne | | package `fyne` |
+| MyGo | | package `mygo` |
 | World basemap for maps | feature `geo-world` | package `geo/world` |
 
-PNG, Slint, egui chart text and Fyne's missing glyphs use the system fonts:
-charta embeds none. Gio and Fyne need cgo, as those toolkits do; the core,
-HTML and PNG do not.
+PNG, Slint, egui and MyGo chart text and Fyne's missing glyphs use the
+system fonts: charta embeds none. Gio and Fyne need cgo, as those toolkits
+do; the core, HTML, PNG and MyGo do not.
 
 ### Zoom in the browser
 
@@ -102,7 +103,7 @@ make setup      # pinned tools from mise.toml, and the wasm32 target
 make check      # what CI runs: lint, tests, Rust/Go conformance, browser zoom, site
 make site       # the GitHub Pages gallery, into build/site
 make gallery    # Rust/Go scene conformance + side-by-side HTML gallery
-make run-egui   # native galleries: run-egui, run-slint, run-gio, run-fyne
+make run-egui   # native galleries: run-egui, run-slint, run-gio, run-fyne, run-mygo
 ```
 
 The native backends' tests render headless. On Linux without a GPU they run

@@ -14,7 +14,7 @@ export CARGO_PROFILE_RELEASE_LTO           ?= false
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS ?= 16
 
 .DEFAULT_GOAL := help
-.PHONY: help setup build wasm site test test-conformance test-web lint fmt check gallery run-egui run-slint run-gio run-fyne clean
+.PHONY: help setup build wasm site test test-conformance test-web lint fmt check gallery run-egui run-slint run-gio run-fyne run-mygo clean
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) \
@@ -84,6 +84,9 @@ run-gio: ## Open the Gio gallery (DARK=1 for the dark palette)
 
 run-fyne: ## Open the Fyne gallery (follows the system light/dark setting)
 	go run ./cmd/fyne-gallery
+
+run-mygo: ## Open the MyGo gallery (follows the system light/dark setting; no cgo)
+	go run ./cmd/mygo-gallery
 
 clean: ## Remove build output
 	rm -rf $(OUT) target
