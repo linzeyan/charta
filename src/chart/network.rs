@@ -25,6 +25,23 @@ const MAX_ZOOM: f64 = 3.0;
 links_chart!(
     /// Nodes placed by a force simulation: linked nodes pull together,
     /// all nodes push apart, so clusters and bridges show.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, NetworkChart};
+    ///
+    /// let chart = NetworkChart::new()
+    ///     .title("Who works with whom")
+    ///     .link("Ana", "Ben", 3.0)
+    ///     .link("Ana", "Cleo", 2.0)
+    ///     .link("Ben", "Cleo", 2.0)
+    ///     .link("Cleo", "Dev", 1.0);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Who works with whom. Network diagram of 4 nodes and 4 links.");
+    /// ```
     NetworkChart,
     false,
     network

@@ -81,11 +81,51 @@ macro_rules! price_chart {
 
 price_chart!(
     /// Candlesticks: a body from open to close and wicks to the high and low.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::base::time::to_ms;
+    /// use charta::{Candle, CandlestickChart, Chart};
+    ///
+    /// let day = |d| to_ms(2026, 3, d, 0, 0, 0);
+    /// let candles = vec![
+    ///     Candle::new(day(2), 100.0, 102.5, 99.1, 101.8),
+    ///     Candle::new(day(3), 101.8, 103.0, 100.2, 100.6),
+    ///     Candle::new(day(4), 100.6, 101.4, 98.0, 98.9),
+    ///     Candle::new(day(5), 98.9, 101.7, 98.5, 101.2),
+    /// ];
+    /// let chart = CandlestickChart::new(candles).title("ACME daily");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "ACME daily. Candlestick chart of 4 periods.");
+    /// ```
     CandlestickChart
 );
 price_chart!(
     /// Open-high-low-close bars: the range as a line, open and close as
     /// ticks to the left and right.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::base::time::to_ms;
+    /// use charta::{Candle, Chart, OhlcChart};
+    ///
+    /// let day = |d| to_ms(2026, 3, d, 0, 0, 0);
+    /// let candles = vec![
+    ///     Candle::new(day(2), 100.0, 102.5, 99.1, 101.8),
+    ///     Candle::new(day(3), 101.8, 103.0, 100.2, 100.6),
+    ///     Candle::new(day(4), 100.6, 101.4, 98.0, 98.9),
+    ///     Candle::new(day(5), 98.9, 101.7, 98.5, 101.2),
+    /// ];
+    /// let chart = OhlcChart::new(candles).title("ACME daily");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "ACME daily. OHLC chart of 4 periods.");
+    /// ```
     OhlcChart
 );
 

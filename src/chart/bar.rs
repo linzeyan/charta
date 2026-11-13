@@ -21,6 +21,18 @@ pub struct Bar {
 }
 
 /// Vertical bars comparing one value across categories.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{BarChart, Chart};
+///
+/// let chart = BarChart::new([("Apples", 30.0), ("Pears", 80.0)]).title("Fruit sold");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Fruit sold. Bar chart with 2 bars.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BarChart {

@@ -73,11 +73,37 @@ macro_rules! pie_chart {
 pie_chart!(
     /// Shares of a whole as slices of a circle, clockwise from twelve
     /// o'clock in data order.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, PieChart};
+    ///
+    /// let chart = PieChart::new([("Chrome", 64.7), ("Safari", 18.6), ("Edge", 5.2), ("Other", 11.5)])
+    ///     .title("Browser share (%)");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Browser share (%). Pie chart of 4 slices.");
+    /// ```
     PieChart,
     false
 );
 pie_chart!(
     /// A pie with its center cut out, where the total is shown.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, DonutChart};
+    ///
+    /// let chart = DonutChart::new([("Engineering", 420.0), ("Sales", 260.0), ("Support", 90.0)])
+    ///     .title("Budget by department (k$)");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Budget by department (k$). Donut chart of 3 slices, total 770.");
+    /// ```
     DonutChart,
     true
 );

@@ -14,6 +14,21 @@ use std::f64::consts::TAU;
 /// Categories as equal wedges around a circle (a Nightingale rose or
 /// coxcomb), each wedge's area proportional to its value; several series
 /// stack outward.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, RoseChart};
+///
+/// let chart = RoseChart::new(["Jan", "Feb", "Mar", "Apr", "May", "Jun"])
+///     .title("Causes of mortality")
+///     .series("Disease", [120.0, 150.0, 180.0, 210.0, 260.0, 320.0])
+///     .series("Wounds", [20.0, 25.0, 30.0, 40.0, 60.0, 80.0]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Causes of mortality. Nightingale rose chart of 2 series across 6 categories.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RoseChart {

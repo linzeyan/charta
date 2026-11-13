@@ -19,6 +19,23 @@ const KAPPA: f64 = 0.552_284_749_830_793_6;
 links_chart!(
     /// Nodes in a row with links arching over them: long-range connections
     /// rise high, local ones stay low.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{ArcChart, Chart};
+    ///
+    /// let chart = ArcChart::new()
+    ///     .title("Co-authored papers")
+    ///     .link("Kim", "Lee", 4.0)
+    ///     .link("Kim", "Park", 2.0)
+    ///     .link("Lee", "Park", 3.0)
+    ///     .link("Park", "Choi", 1.0);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Co-authored papers. Arc diagram of 4 nodes and 4 links.");
+    /// ```
     ArcChart,
     false,
     arcs

@@ -19,6 +19,33 @@ pub struct Region {
 map_chart!(
     /// Regions shaded by value on the sequential ramp; regions without a
     /// value stay neutral.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::geo::{Feature, Geometry};
+    /// use charta::{Chart, ChoroplethChart};
+    ///
+    /// // Two made-up square regions, so no basemap is needed.
+    /// let square = |id: &str, name: &str, lon: f64| Feature {
+    ///     id: id.into(),
+    ///     name: name.into(),
+    ///     geometry: Geometry::Polygon(vec![vec![
+    ///         (lon, 0.0),
+    ///         (lon + 10.0, 0.0),
+    ///         (lon + 10.0, 10.0),
+    ///         (lon, 10.0),
+    ///     ]]),
+    /// };
+    /// let chart = ChoroplethChart::new(vec![square("W", "West", 0.0), square("E", "East", 10.0)])
+    ///     .title("Rainfall (mm)")
+    ///     .value("W", 820.0)
+    ///     .value("E", 540.0);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Rainfall (mm). Choropleth map of 2 regions, 2 with data.");
+    /// ```
     ChoroplethChart { values: Vec<Region> }
 );
 

@@ -43,6 +43,22 @@ pub struct VennArea {
 /// near as possible for four or five; an overlap of three or more sets
 /// given too brings every given area into the fit. A pair left out shares
 /// nothing.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, VennChart};
+///
+/// let chart = VennChart::new()
+///     .title("Languages spoken (people)")
+///     .area(["English"], 120.0)
+///     .area(["Spanish"], 70.0)
+///     .area(["English", "Spanish"], 30.0);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Languages spoken (people). Venn diagram of 2 sets.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct VennChart {

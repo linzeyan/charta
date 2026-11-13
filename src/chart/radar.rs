@@ -16,6 +16,21 @@ const MAX_SERIES: usize = 3;
 
 /// Several measures on spokes sharing one scale from the center, each
 /// series a closed polygon: profiles compared at a glance.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, RadarChart};
+///
+/// let chart = RadarChart::new(["Speed", "Range", "Comfort", "Safety", "Price"])
+///     .title("Model comparison")
+///     .series("Model A", [8.0, 6.0, 7.0, 9.0, 5.0])
+///     .series("Model B", [6.0, 9.0, 6.0, 7.0, 8.0]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Model comparison. Radar chart of 2 series on 5 axes.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RadarChart {

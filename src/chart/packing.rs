@@ -13,6 +13,28 @@ const PADDING: f64 = 3.0;
 
 /// Nested circles: each leaf's area proportional to its value, siblings
 /// packed tightly inside their parent.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, CirclePackingChart, Node};
+///
+/// let teams = Node::branch(
+///     "Company",
+///     vec![
+///         Node::branch(
+///             "Engineering",
+///             vec![Node::leaf("Frontend", 12.0), Node::leaf("Backend", 18.0)],
+///         ),
+///         Node::branch("Product", vec![Node::leaf("PM", 6.0), Node::leaf("Design", 9.0)]),
+///     ],
+/// );
+/// let chart = CirclePackingChart::new(teams).title("Team sizes");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Team sizes. Circle packing of 4 items.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CirclePackingChart {

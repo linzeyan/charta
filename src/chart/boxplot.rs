@@ -59,11 +59,43 @@ macro_rules! sample_chart {
 sample_chart!(
     /// Each group's quartiles as a box, whiskers to the last values inside
     /// 1.5 × IQR, and the values beyond as outliers.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{BoxPlotChart, Chart};
+    ///
+    /// let chart = BoxPlotChart::new()
+    ///     .title("Yield by fertilizer")
+    ///     .y_label("t/ha")
+    ///     .group("None", [5.7, 4.3, 4.5, 3.6, 3.9, 4.4, 6.4, 2.8, 3.4, 5.3])
+    ///     .group("Organic", [6.7, 6.9, 6.5, 7.3, 5.9, 6.1, 7.2, 6.4, 5.7, 7.2]);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Yield by fertilizer. Box plot of 2 groups.");
+    /// ```
     BoxPlotChart
 );
 sample_chart!(
     /// Each group's distribution as a mirrored density, with its quartiles
     /// inside.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, ViolinChart};
+    ///
+    /// let chart = ViolinChart::new()
+    ///     .title("Yield by fertilizer")
+    ///     .y_label("t/ha")
+    ///     .group("None", [5.7, 4.3, 4.5, 3.6, 3.9, 4.4, 6.4, 2.8, 3.4, 5.3])
+    ///     .group("Organic", [6.7, 6.9, 6.5, 7.3, 5.9, 6.1, 7.2, 6.4, 5.7, 7.2]);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Yield by fertilizer. Violin plot of 2 groups.");
+    /// ```
     ViolinChart
 );
 

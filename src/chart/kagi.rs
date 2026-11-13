@@ -18,6 +18,27 @@ const DEFAULT_REVERSAL: f64 = 4.0;
 
 /// A Kagi chart: a line that only turns when the price reverses by a set
 /// percentage, ignoring time; it thickens on new highs and thins on new lows.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::base::time::{DAY, to_ms};
+/// use charta::{Chart, KagiChart, TimeValue};
+///
+/// let start = to_ms(2026, 1, 1, 0, 0, 0);
+/// let closes: Vec<TimeValue> = [
+///     50.0, 51.2, 52.5, 53.1, 51.0, 48.7, 47.9, 49.5, 52.0, 54.6, 55.2, 53.0, 50.4, 49.8,
+/// ]
+/// .iter()
+/// .enumerate()
+/// .map(|(i, &v)| TimeValue::new(start + i as i64 * DAY, v))
+/// .collect();
+/// let chart = KagiChart::new(closes).title("ACME close");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "ACME close. Kagi chart of 14 prices with a 4% reversal.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

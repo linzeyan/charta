@@ -17,6 +17,31 @@ const RADIUS: f64 = 2.0;
 
 /// Nested rectangles, each leaf's area proportional to its value, grouped
 /// by branch (squarified, so cells stay close to square).
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, Node, TreemapChart};
+///
+/// let revenue = Node::branch(
+///     "Revenue",
+///     vec![
+///         Node::branch(
+///             "Software",
+///             vec![Node::leaf("Cloud", 42.0), Node::leaf("Licenses", 18.0)],
+///         ),
+///         Node::branch(
+///             "Hardware",
+///             vec![Node::leaf("Servers", 28.0), Node::leaf("Storage", 16.0)],
+///         ),
+///     ],
+/// );
+/// let chart = TreemapChart::new(revenue).title("Revenue by product line (M$)");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Revenue by product line (M$). Treemap of 4 items.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TreemapChart {

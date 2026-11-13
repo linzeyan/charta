@@ -9,6 +9,23 @@ use crate::layout::stats;
 use crate::scene::{Corners, Hit, Mark, Rect, Scene, Shape};
 
 /// The distribution of one variable as counts in equal-width bins.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, HistogramChart};
+///
+/// let waits = [
+///     30.0, 37.0, 30.0, 29.0, 24.0, 30.0, 42.0, 36.0, 41.0, 34.0, 17.0, 40.0, 26.0, 47.0, 25.0,
+/// ];
+/// let chart = HistogramChart::new(waits)
+///     .title("Support wait times")
+///     .x_label("Minutes");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Support wait times. Histogram of 15 values in 7 bins.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

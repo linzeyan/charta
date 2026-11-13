@@ -15,6 +15,24 @@ const NODE_GAP: f64 = 16.0;
 
 /// Flows between stages: each node a bar as tall as what passes through it,
 /// each link a band as thick as its value.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, SankeyChart};
+///
+/// let chart = SankeyChart::new()
+///     .title("Energy flows (TWh)")
+///     .link("Coal", "Electricity", 120.0)
+///     .link("Gas", "Electricity", 90.0)
+///     .link("Gas", "Homes", 60.0)
+///     .link("Electricity", "Homes", 110.0)
+///     .link("Electricity", "Industry", 100.0);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Energy flows (TWh). Sankey diagram of 5 flows between 5 nodes.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SankeyChart {

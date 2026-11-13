@@ -19,6 +19,22 @@ const TAIL: f64 = 3.0;
 
 /// Smoothed distributions (Gaussian kernel density estimates) of one or
 /// more samples on a shared value axis.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, DensityChart};
+///
+/// let chart = DensityChart::new()
+///     .title("Response time by region")
+///     .x_label("ms")
+///     .series("EU", [138.0, 117.0, 85.0, 145.0, 118.0, 109.0, 127.0, 147.0, 102.0, 140.0])
+///     .series("US", [145.0, 119.0, 136.0, 177.0, 109.0, 175.0, 170.0, 150.0, 154.0, 121.0]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Response time by region. Density plot of 2 series.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

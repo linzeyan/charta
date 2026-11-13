@@ -87,10 +87,55 @@ macro_rules! point_chart {
 
 point_chart!(
     /// Points on two value axes.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, Point, ScatterChart};
+    ///
+    /// let chart = ScatterChart::new()
+    ///     .title("Height vs weight")
+    ///     .axes("Height (cm)", "Weight (kg)")
+    ///     .series(
+    ///         "Adults",
+    ///         vec![
+    ///             Point::new(160.0, 55.0),
+    ///             Point::new(168.0, 62.0),
+    ///             Point::new(175.0, 70.0),
+    ///             Point::new(182.0, 81.0),
+    ///         ],
+    ///     );
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Height vs weight. Scatterplot with 1 series and 4 points.");
+    /// ```
     ScatterChart
 );
 point_chart!(
     /// A scatterplot whose point areas encode a third value.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{BubbleChart, Chart, Point};
+    ///
+    /// let chart = BubbleChart::new()
+    ///     .title("Markets")
+    ///     .axes("Growth (%)", "Margin (%)")
+    ///     .series(
+    ///         "Markets",
+    ///         vec![
+    ///             Point::new(2.0, 12.0).size(40.0).label("EU"),
+    ///             Point::new(6.5, 9.0).size(90.0).label("Asia"),
+    ///             Point::new(4.0, 18.0).size(25.0).label("US"),
+    ///         ],
+    ///     );
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Markets. Bubble chart with 1 series and 3 points.");
+    /// ```
     BubbleChart
 );
 

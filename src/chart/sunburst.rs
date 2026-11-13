@@ -13,6 +13,25 @@ const TOTAL_SIZE: f64 = 18.0;
 
 /// A hierarchy as rings: the root's children around the center, each
 /// level outward, every node's angle proportional to its value.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, Node, SunburstChart};
+///
+/// let disk = Node::branch(
+///     "Disk",
+///     vec![
+///         Node::branch("Media", vec![Node::leaf("Photos", 48.0), Node::leaf("Videos", 72.0)]),
+///         Node::branch("Apps", vec![Node::leaf("System", 35.0), Node::leaf("Games", 40.0)]),
+///     ],
+/// );
+/// let chart = SunburstChart::new(disk).title("Disk usage (GB)");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Disk usage (GB). Sunburst of 4 items in 2 levels.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SunburstChart {

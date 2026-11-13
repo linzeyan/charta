@@ -18,6 +18,19 @@ pub struct Span {
 
 /// Horizontal bars spanning each category's range. A span has no baseline,
 /// so both ends are data ends and both are rounded.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, SpanChart};
+///
+/// let chart = SpanChart::new([("Mon", 12.0, 21.0), ("Tue", 9.0, 18.0), ("Wed", 14.0, 25.0)])
+///     .title("Daily temperature range (°C)");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Daily temperature range (°C). Span chart with 3 ranges.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SpanChart {

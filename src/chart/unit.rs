@@ -66,6 +66,20 @@ macro_rules! unit_chart {
 unit_chart!(
     /// Rows of icons, each standing for `unit`; the last one cut to the
     /// fraction left over.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, PictogramChart};
+    ///
+    /// // Each icon stands for 10 volunteers.
+    /// let chart = PictogramChart::new([("Lisbon", 46.0), ("Porto", 32.0), ("Faro", 7.0)], 10.0)
+    ///     .title("Volunteers by city");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Volunteers by city. Pictogram of 3 rows, each icon 10.");
+    /// ```
     PictogramChart {
         /// What one icon is worth.
         unit: f64,
@@ -76,11 +90,38 @@ unit_chart!(
 
 unit_chart!(
     /// Counts as tally marks in groups of five.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, TallyChart};
+    ///
+    /// let chart = TallyChart::new([("Robin", 12.0), ("Sparrow", 23.0), ("Wren", 4.0)])
+    ///     .title("Birds spotted this morning");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Birds spotted this morning. Tally chart of 3 rows.");
+    /// ```
     TallyChart {}
 );
 
 unit_chart!(
     /// One dot per `unit`, colored by category and filled in order.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, DotMatrixChart};
+    ///
+    /// // One dot per seat.
+    /// let chart = DotMatrixChart::new([("Greens", 42.0), ("Reds", 31.0), ("Blues", 15.0)], 1.0)
+    ///     .title("Seats won");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Seats won. Dot matrix of 88 dots in 3 categories, each dot 1.");
+    /// ```
     DotMatrixChart {
         /// What one dot is worth.
         unit: f64
@@ -100,6 +141,19 @@ pub enum AreaShape {
 unit_chart!(
     /// Shapes side by side, area proportional to value: for values too far
     /// apart for bars, at the cost of precise comparison.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, ProportionalAreaChart};
+    ///
+    /// let chart = ProportionalAreaChart::new([("Russia", 17.1), ("India", 3.29), ("Japan", 0.378)])
+    ///     .title("Land area (M km²)");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Land area (M km²). Proportional area chart of 3 values.");
+    /// ```
     ProportionalAreaChart {
         #[cfg_attr(feature = "serde", serde(default))]
         shape: AreaShape

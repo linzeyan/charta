@@ -19,6 +19,23 @@ pub struct PyramidSide {
 /// Two distributions back to back: groups as rows (top to bottom), one side
 /// growing left and the other right from a shared center gutter that holds
 /// the group labels.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, PyramidChart};
+///
+/// let chart = PyramidChart::new(["0–29", "30–59", "60+"])
+///     .title("Population by age (k)")
+///     .sides(
+///         ("Male", vec![310.0, 280.0, 150.0]),
+///         ("Female", vec![300.0, 285.0, 190.0]),
+///     );
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Population by age (k). Population pyramid of Male and Female across 3 groups.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct PyramidChart {

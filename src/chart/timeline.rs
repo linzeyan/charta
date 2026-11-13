@@ -33,6 +33,25 @@ impl Event {
 
 /// Events in time order along one line, labels stacked above and below so
 /// they never overlap.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::base::time::to_ms;
+/// use charta::{Chart, Event, TimelineChart};
+///
+/// let at = |y, m, d| to_ms(y, m, d, 0, 0, 0);
+/// let chart = TimelineChart::new(vec![
+///     Event::new(at(2019, 3, 14), "Founded"),
+///     Event::new(at(2021, 9, 1), "1.0 release"),
+///     Event::new(at(2023, 8, 8), "Series A"),
+/// ])
+/// .title("Company milestones");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Company milestones. Timeline of 3 events.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

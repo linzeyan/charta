@@ -41,6 +41,22 @@ impl ParallelRow {
 
 /// Many numeric dimensions side by side, each on its own vertical axis;
 /// every observation is a line through its values.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, ParallelChart, ParallelRow};
+///
+/// let chart = ParallelChart::new(["Price ($)", "Weight (kg)", "Battery (h)"])
+///     .title("Laptops")
+///     .row(ParallelRow::new("Air 13", [1099.0, 1.24, 18.0]).group("Ultrabook"))
+///     .row(ParallelRow::new("Legion 5", [1299.0, 2.4, 5.0]).group("Gaming"))
+///     .row(ParallelRow::new("Chromebook", [299.0, 1.5, 10.0]).group("Budget"));
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Laptops. Parallel coordinates plot of 3 rows across 3 dimensions.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ParallelChart {

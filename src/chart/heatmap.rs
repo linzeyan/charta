@@ -12,6 +12,23 @@ const CELL_RADIUS: f64 = 2.0;
 const SQRT_HALF: f64 = std::f64::consts::FRAC_1_SQRT_2;
 
 /// A grid of cells colored by magnitude on a one-hue sequential ramp.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, HeatmapChart};
+///
+/// let chart = HeatmapChart::new(
+///     ["Mon", "Tue", "Wed"],
+///     ["Morning", "Evening"],
+///     vec![vec![12.0, 18.0, 15.0], vec![22.0, 19.0, 26.0]],
+/// )
+/// .title("Orders by time of day");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Orders by time of day. Heatmap with 2 rows and 3 columns.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct HeatmapChart {

@@ -39,11 +39,46 @@ pub struct Dot {
 
 map_chart!(
     /// Circles on a map, area proportional to each place's value.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{BubbleMapChart, Chart};
+    ///
+    /// // No regions: just the places, positioned by longitude and latitude.
+    /// let chart = BubbleMapChart::new(Vec::new())
+    ///     .title("Largest urban areas (M people)")
+    ///     .place("Tokyo", 139.69, 35.69, 37.4)
+    ///     .place("Delhi", 77.21, 28.61, 31.0)
+    ///     .place("New York", -74.01, 40.71, 18.8);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Largest urban areas (M people). Bubble map of 3 places.");
+    /// ```
     BubbleMapChart { places: Vec<Place> }
 );
 
 map_chart!(
     /// One small dot per item at its location: density shows as clusters.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, DotMapChart};
+    ///
+    /// // No regions: just the dots, positioned by longitude and latitude.
+    /// let chart = DotMapChart::new(Vec::new())
+    ///     .title("Strong earthquakes (sample)")
+    ///     .dot(142.8, 36.4, "Shallow")
+    ///     .dot(140.7, 36.7, "Deep")
+    ///     .dot(-73.7, -33.2, "Shallow")
+    ///     .dot(-151.9, 58.1, "Deep");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Strong earthquakes (sample). Dot map of 4 dots.");
+    /// ```
     DotMapChart { dots: Vec<Dot> }
 );
 

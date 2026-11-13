@@ -47,6 +47,23 @@ impl Slot {
 
 /// A weekly schedule: a column per day, time of day running down, each
 /// booking a block; overlapping bookings share their column side by side.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, Slot, TimetableChart};
+///
+/// // Start and end are minutes after midnight.
+/// let chart = TimetableChart::new(["Mon", "Tue", "Wed"])
+///     .title("Class timetable")
+///     .slot(Slot::new("Mon", 9 * 60, 10 * 60 + 30, "Maths").group("Lecture"))
+///     .slot(Slot::new("Tue", 14 * 60, 16 * 60, "Chemistry").group("Lab"))
+///     .slot(Slot::new("Wed", 11 * 60, 12 * 60, "History").group("Seminar"));
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Class timetable. Timetable of 3 slots across 3 days.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimetableChart {

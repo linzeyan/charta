@@ -23,6 +23,23 @@ pub struct Combination {
 /// Categorical dimensions side by side, each split by category share, with
 /// ribbons tracing how items in one dimension's categories divide across
 /// the next. Ribbons keep the first dimension's color all the way along.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, ParallelSetsChart};
+///
+/// let chart = ParallelSetsChart::new(["Class", "Survived"])
+///     .title("Titanic passengers")
+///     .combination(["First", "Yes"], 203.0)
+///     .combination(["First", "No"], 122.0)
+///     .combination(["Third", "Yes"], 178.0)
+///     .combination(["Third", "No"], 528.0);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Titanic passengers. Parallel sets of 1,031 across 2 dimensions.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ParallelSetsChart {

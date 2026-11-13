@@ -44,3 +44,7 @@ default-members = ["."]
 [[example]]
 name = "fixtures"
 required-features = ["serde", "geo-world"]
+
+[[example]]
+name = "png"
+required-features = ["png"]

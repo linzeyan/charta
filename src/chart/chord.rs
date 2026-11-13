@@ -20,6 +20,23 @@ const MAX_STROKE: f64 = 4.0;
 links_chart!(
     /// Flows between a handful of groups: each group an arc as long as all
     /// it sends and receives, each pair a ribbon as wide as their exchange.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, ChordChart};
+    ///
+    /// let chart = ChordChart::new()
+    ///     .title("Migration between regions (k people)")
+    ///     .link("North", "South", 30.0)
+    ///     .link("South", "North", 12.0)
+    ///     .link("North", "East", 18.0)
+    ///     .link("East", "South", 9.0);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Migration between regions (k people). Chord diagram of 4 flows among 3 groups.");
+    /// ```
     ChordChart,
     true,
     chord
@@ -28,6 +45,23 @@ links_chart!(
 links_chart!(
     /// Connections between nodes on a circle, drawn as curves through the
     /// middle: which nodes connect, not how much flows.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, NonRibbonChordChart};
+    ///
+    /// let chart = NonRibbonChordChart::new()
+    ///     .title("Package dependencies")
+    ///     .link("core", "utils", 2.0)
+    ///     .link("core", "io", 2.0)
+    ///     .link("io", "net", 1.0)
+    ///     .link("cli", "core", 2.0);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Package dependencies. Non-ribbon chord diagram of 4 links among 5 nodes.");
+    /// ```
     NonRibbonChordChart,
     false,
     non_ribbon

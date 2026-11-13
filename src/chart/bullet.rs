@@ -35,6 +35,26 @@ pub struct Bullet {
 
 /// Bullet graphs: compact horizontal gauges, one per measure. Measures
 /// rarely share units, so each gauge has its own scale and tick labels.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Bullet, BulletChart, Chart};
+///
+/// let chart = BulletChart::new(vec![
+///     Bullet::new("Revenue (k$)", 270.0)
+///         .target(250.0)
+///         .ranges([150.0, 225.0, 300.0]),
+///     Bullet::new("Profit (%)", 22.5)
+///         .target(26.0)
+///         .ranges([20.0, 25.0, 30.0]),
+/// ])
+/// .title("Q3 against target");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Q3 against target. Bullet graph with 2 measures.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BulletChart {

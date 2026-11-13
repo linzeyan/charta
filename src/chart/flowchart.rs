@@ -76,6 +76,27 @@ pub struct Arrow {
 
 /// Steps joined by arrows, laid out top to bottom in rows so that arrows
 /// point down; an arrow back up (a loop) curves around the right side.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, FlowChart, StepKind};
+///
+/// let chart = FlowChart::new()
+///     .title("Order handling")
+///     .step("order", StepKind::Terminal, "Order placed")
+///     .step("stock", StepKind::Decision, "In stock?")
+///     .step("ship", StepKind::Process, "Ship")
+///     .step("wait", StepKind::Process, "Wait for stock")
+///     .arrow("order", "stock", "")
+///     .arrow("stock", "ship", "Yes")
+///     .arrow("stock", "wait", "No")
+///     .arrow("wait", "stock", "");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Order handling. Flow chart of 4 steps.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct FlowChart {

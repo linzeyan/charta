@@ -64,12 +64,51 @@ tree_chart!(
     /// A hierarchy as a node-link diagram, root on the left and each level
     /// a column further right (a tidy tree: subtrees never overlap and
     /// parents sit centered beside their children).
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, Node, TreeChart};
+    ///
+    /// let org = Node::branch(
+    ///     "CEO",
+    ///     vec![
+    ///         Node::branch("CTO", vec![Node::new("Platform"), Node::new("Data")]),
+    ///         Node::branch("CFO", vec![Node::new("Finance"), Node::new("Legal")]),
+    ///     ],
+    /// );
+    /// let chart = TreeChart::new(org).title("Organization");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Organization. Tree diagram of 7 nodes in 3 levels.");
+    /// ```
     TreeChart,
     tree_diagram
 );
 tree_chart!(
     /// A mind map: the central topic in the middle, ideas branching outward
     /// in every direction, each main branch in its own hue.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{BrainstormChart, Chart, Node};
+    ///
+    /// let plan = Node::branch(
+    ///     "Launch plan",
+    ///     vec![
+    ///         Node::branch("Marketing", vec![Node::new("Social"), Node::new("Email")]),
+    ///         Node::branch("Product", vec![Node::new("Pricing"), Node::new("Docs")]),
+    ///         Node::new("Support"),
+    ///     ],
+    /// );
+    /// let chart = BrainstormChart::new(plan).title("Launch plan");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Launch plan. Mind map of 7 ideas around \"Launch plan\".");
+    /// ```
     BrainstormChart,
     brainstorm
 );

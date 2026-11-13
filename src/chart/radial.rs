@@ -81,12 +81,45 @@ macro_rules! radial_chart {
 radial_chart!(
     /// Bars bent into concentric rings, length as the angle swept clockwise
     /// from twelve o'clock; the first bar is the outermost ring.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, RadialBarChart};
+    ///
+    /// let chart = RadialBarChart::new([("Running", 82.0), ("Cycling", 64.0), ("Swimming", 45.0)])
+    ///     .title("Goal progress (%)");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Goal progress (%). Radial bar chart with 3 bars.");
+    /// ```
     RadialBarChart,
     radial_bar
 );
 radial_chart!(
     /// Columns standing outward from a circle, one per category around it,
     /// length from the inner circle proportional to value.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, RadialColumnChart};
+    ///
+    /// let chart = RadialColumnChart::new([
+    ///     ("Jan", 78.0),
+    ///     ("Feb", 62.0),
+    ///     ("Mar", 55.0),
+    ///     ("Apr", 48.0),
+    ///     ("May", 61.0),
+    ///     ("Jun", 84.0),
+    /// ])
+    /// .title("Rainfall by month (mm)");
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Rainfall by month (mm). Radial column chart with 6 columns.");
+    /// ```
     RadialColumnChart,
     radial_column
 );

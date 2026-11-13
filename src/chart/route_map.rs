@@ -35,6 +35,24 @@ pub struct Location {
 map_chart!(
     /// Places joined by their shortest routes on the globe (great
     /// circles): which places connect.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, ConnectionMapChart};
+    ///
+    /// let chart = ConnectionMapChart::new(Vec::new())
+    ///     .title("Nonstop flights from Singapore")
+    ///     .place("Singapore", 103.82, 1.35)
+    ///     .place("London", -0.13, 51.51)
+    ///     .place("Sydney", 151.21, -33.87)
+    ///     .link("Singapore", "London", 28.0)
+    ///     .link("Singapore", "Sydney", 35.0);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Nonstop flights from Singapore. Connection map of 2 routes between 3 places.");
+    /// ```
     ConnectionMapChart {
         places: Vec<Location>,
         links: Vec<Link>
@@ -44,6 +62,24 @@ map_chart!(
 map_chart!(
     /// Curved arrows from place to place, as thick as what moves: where
     /// things go and how much.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, FlowMapChart};
+    ///
+    /// let chart = FlowMapChart::new(Vec::new())
+    ///     .title("Green coffee exports (kt)")
+    ///     .place("Brazil", -51.9, -14.2)
+    ///     .place("USA", -98.6, 39.8)
+    ///     .place("Germany", 10.5, 51.2)
+    ///     .link("Brazil", "USA", 400.0)
+    ///     .link("Brazil", "Germany", 300.0);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Green coffee exports (kt). Flow map of 2 flows between 3 places.");
+    /// ```
     FlowMapChart {
         places: Vec<Location>,
         links: Vec<Link>

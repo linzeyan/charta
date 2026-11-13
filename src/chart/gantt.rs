@@ -47,6 +47,25 @@ impl Task {
 }
 
 /// Tasks as bars on a shared time axis, one row each, in the given order.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::base::time::to_ms;
+/// use charta::{Chart, GanttChart, Task};
+///
+/// let day = |m, d| to_ms(2026, m, d, 0, 0, 0);
+/// let chart = GanttChart::new(vec![
+///     Task::new("Research", day(1, 5), day(1, 17)).group("Design"),
+///     Task::new("Backend", day(1, 19), day(2, 20)).group("Build"),
+///     Task::new("Go live", day(3, 2), day(3, 2)).group("Launch"),
+/// ])
+/// .title("Website relaunch");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Website relaunch. Gantt chart of 3 tasks.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

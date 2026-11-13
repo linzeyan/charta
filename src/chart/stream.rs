@@ -17,6 +17,24 @@ const SEAM: f64 = 1.0;
 
 /// Stacked layers flowing around a moving center line: totals and their
 /// mix over time, with the wiggle of each layer minimized.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::base::time::to_ms;
+/// use charta::{Chart, StreamChart};
+///
+/// let months = (1..=6).map(|m| to_ms(2025, m, 1, 0, 0, 0));
+/// let chart = StreamChart::new(months)
+///     .title("Listening hours by genre (k)")
+///     .series("Pop", [22.0, 24.0, 23.0, 27.0, 30.0, 36.0])
+///     .series("Rock", [18.0, 17.0, 19.0, 18.0, 16.0, 15.0])
+///     .series("Jazz", [6.0, 6.0, 5.0, 5.0, 4.0, 4.0]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Listening hours by genre (k). Stream graph of 3 series over 6 times.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

@@ -9,6 +9,21 @@ use crate::scene::{Corners, Hit, Mark, Rect, Scene, Shape};
 
 /// Series stacked into one bar per category. Positive values stack up from
 /// the baseline, negative ones down, each direction on its own.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, StackedBarChart};
+///
+/// let chart = StackedBarChart::new(["Q1", "Q2", "Q3"])
+///     .title("Tickets by channel")
+///     .series("Email", [40.0, 35.0, 42.0])
+///     .series("Chat", [22.0, 30.0, 33.0]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Tickets by channel. Stacked bar chart with 2 series and 3 categories.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct StackedBarChart {

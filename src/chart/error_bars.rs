@@ -21,6 +21,24 @@ pub struct ErrorBar {
 }
 
 /// One estimate per category with its error range as a whisker.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, ErrorBarChart};
+///
+/// // Each row is (label, estimate, low, high).
+/// let chart = ErrorBarChart::new([
+///     ("Control", 4.2, 3.6, 4.9),
+///     ("Dose A", 5.8, 5.1, 6.4),
+///     ("Dose B", 7.1, 6.0, 8.3),
+/// ])
+/// .title("Response by treatment");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Response by treatment. Error bar chart with 3 estimates.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ErrorBarChart {

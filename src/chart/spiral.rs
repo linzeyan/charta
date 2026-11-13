@@ -19,6 +19,33 @@ const EDGE_STEPS: usize = 6;
 
 /// Values in sequence around an Archimedean spiral, one turn per period
 /// (a year of months, a week of days), so cycles line up radially.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, SpiralChart};
+///
+/// // Two years of quarterly sales, one turn of the spiral per year.
+/// let chart = SpiralChart::new(
+///     4,
+///     [
+///         ("Q1 2024", 12.0),
+///         ("Q2 2024", 15.0),
+///         ("Q3 2024", 19.0),
+///         ("Q4 2024", 24.0),
+///         ("Q1 2025", 14.0),
+///         ("Q2 2025", 17.0),
+///         ("Q3 2025", 22.0),
+///         ("Q4 2025", 28.0),
+///     ],
+/// )
+/// .title("Sales by quarter (M$)")
+/// .angle_labels(["Q1", "Q2", "Q3", "Q4"]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Sales by quarter (M$). Spiral plot of 8 values, 4 per turn.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

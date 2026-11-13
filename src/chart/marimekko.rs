@@ -14,6 +14,21 @@ const QUARTERS: usize = 4;
 /// Columns as wide as each category's total and split by series share: a
 /// 100% stacked bar chart whose bar widths also carry a value, so every
 /// cell's area is its share of the grand total.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, MarimekkoChart};
+///
+/// let chart = MarimekkoChart::new(["North America", "Europe", "Asia"])
+///     .title("Sales by region and vendor (M$)")
+///     .series("Vendor A", [120.0, 80.0, 60.0])
+///     .series("Vendor B", [60.0, 90.0, 110.0]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Sales by region and vendor (M$). Marimekko chart of 2 series across 3 categories.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct MarimekkoChart {

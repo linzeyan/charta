@@ -110,15 +110,60 @@ macro_rules! series_chart {
 
 series_chart!(
     /// One line per series across ordered categories.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, LineChart};
+    ///
+    /// let chart = LineChart::new(["Jan", "Feb", "Mar", "Apr"])
+    ///     .title("Weekly signups")
+    ///     .series("Web", [120.0, 135.0, 128.0, 160.0])
+    ///     .series("iOS", [80.0, 95.0, 110.0, 108.0]);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Weekly signups. Line chart with 2 series and 4 points.");
+    /// ```
     LineChart
 );
 series_chart!(
     /// Lines with a soft wash down to the zero baseline.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{AreaChart, Chart, Curve};
+    ///
+    /// let chart = AreaChart::new(["Jan", "Feb", "Mar", "Apr"])
+    ///     .title("Active users (k)")
+    ///     .series("Users", [3.2, 4.1, 4.0, 5.6])
+    ///     .curve(Curve::Monotone);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Active users (k). Area chart with 1 series and 4 points.");
+    /// ```
     AreaChart
 );
 series_chart!(
     /// Series stacked into bands; each band's top edge is drawn as a line.
     /// Values must be non-negative.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use charta::base::text::InterMetrics;
+    /// use charta::{Chart, StackedAreaChart};
+    ///
+    /// let chart = StackedAreaChart::new(["Jan", "Feb", "Mar", "Apr"])
+    ///     .title("Traffic by source (k)")
+    ///     .series("Search", [12.0, 14.0, 13.0, 16.0])
+    ///     .series("Social", [5.0, 7.0, 9.0, 8.0]);
+    /// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+    /// // The scene's label is what a screen reader announces.
+    /// assert_eq!(scene.label, "Traffic by source (k). Stacked area chart with 2 series and 4 points.");
+    /// ```
     StackedAreaChart
 );
 

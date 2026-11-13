@@ -30,6 +30,24 @@ pub struct Word {
 
 /// Words sized by weight, packed around the center: heaviest first, each at
 /// the first free spot on a spiral out from the middle.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, WordCloudChart};
+///
+/// let chart = WordCloudChart::new()
+///     .title("Words in chart reviews")
+///     .word("data", 90.0)
+///     .word("chart", 72.0)
+///     .word("color", 60.0)
+///     .word("axis", 50.0)
+///     .word("legend", 44.0);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Words in chart reviews. Word cloud of 5 words.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct WordCloudChart {

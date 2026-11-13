@@ -8,6 +8,21 @@ use crate::error::Error;
 use crate::scene::{Hit, Mark, Rect, Scene, Shape};
 
 /// Several series side by side in each category (multi-set bar chart).
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, GroupedBarChart};
+///
+/// let chart = GroupedBarChart::new(["Q1", "Q2", "Q3"])
+///     .title("Revenue by region")
+///     .series("North", [12.0, 15.0, 14.0])
+///     .series("South", [9.0, 11.0, 16.0]);
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Revenue by region. Grouped bar chart with 2 series and 3 categories.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct GroupedBarChart {

@@ -17,6 +17,26 @@ const YEAR_SIZE: f64 = 12.0;
 
 /// A year per block, a column per week and a row per weekday (Monday on
 /// top): one cell per day, colored by its value on a sequential ramp.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::base::time::{DAY, to_ms};
+/// use charta::{CalendarChart, Chart, TimeValue};
+///
+/// let start = to_ms(2025, 1, 1, 0, 0, 0);
+/// let commits = [3.0, 5.0, 2.0, 0.0, 1.0, 4.0, 6.0, 7.0, 2.0, 3.0, 0.0, 0.0, 5.0, 8.0];
+/// let days = commits
+///     .iter()
+///     .enumerate()
+///     .map(|(i, &v)| TimeValue::new(start + i as i64 * DAY, v))
+///     .collect();
+/// let chart = CalendarChart::new(days).title("Commits per day");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Commits per day. Calendar heatmap of 14 days across 1 year.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

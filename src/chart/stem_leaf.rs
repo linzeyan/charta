@@ -19,6 +19,19 @@ const UNIT_RANGE: (i32, i32) = (-6, 12);
 
 /// Values split into a stem (leading digits) and a leaf (the next digit),
 /// one row per stem: a histogram that keeps every value readable.
+///
+/// # Example
+///
+/// ```
+/// use charta::base::text::InterMetrics;
+/// use charta::{Chart, StemLeafChart};
+///
+/// let scores = [53.0, 57.0, 59.0, 60.0, 67.0, 68.0, 71.0, 73.0, 78.0, 80.0, 84.0, 89.0, 90.0, 99.0];
+/// let chart = StemLeafChart::new(scores).title("Exam scores");
+/// let scene = chart.scene(640.0, 400.0, &InterMetrics).unwrap();
+/// // The scene's label is what a screen reader announces.
+/// assert_eq!(scene.label, "Exam scores. Stem-and-leaf plot of 14 values.");
+/// ```
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
