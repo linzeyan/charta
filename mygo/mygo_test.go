@@ -501,6 +501,13 @@ func TestTextSitsOnItsBaseline(t *testing.T) {
 	}
 	capPx := base.CapHeight * 40 * scale
 	tol := 0.15 * capPx
+	// End-anchored text sits one advance left of where it would start. The
+	// ink stops short of the advance by the last glyph's side bearing, which
+	// is font-dependent (about 4.5 DIPs for DejaVu's H on Linux), so compare
+	// with start-anchored ink rather than with the anchor itself.
+	start := label(scene.Bottom, scene.Start)
+	width := Measure{}.Width("HHHH", 40, start.Shape.(scene.TextShape).Weight) * scale
+	endRight := float64(ink(start).Max.X) - width
 	for _, c := range []struct {
 		name         string
 		m            scene.Mark
@@ -510,7 +517,7 @@ func TestTextSitsOnItsBaseline(t *testing.T) {
 	}{
 		{name: "bottom", m: label(scene.Bottom, scene.Start), top: 100*scale - capPx, bottom: 100 * scale, left: 200 * scale, right: -1},
 		{name: "top", m: label(scene.Top, scene.Start), top: 100 * scale, bottom: 100*scale + capPx, left: 200 * scale, right: -1},
-		{name: "center end", m: label(scene.Center, scene.End), top: 100*scale - capPx/2, bottom: 100*scale + capPx/2, left: -1, right: 200 * scale},
+		{name: "center end", m: label(scene.Center, scene.End), top: 100*scale - capPx/2, bottom: 100*scale + capPx/2, left: -1, right: endRight},
 	} {
 		b := ink(c.m)
 		if math.Abs(float64(b.Min.Y)-c.top) > tol || math.Abs(float64(b.Max.Y)-c.bottom) > tol {
